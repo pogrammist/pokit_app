@@ -1,5 +1,5 @@
 import 'package:pokit/logic/models/pokemon.dart';
 
 abstract class PokemonApi {
-  Future<List<Pokemon>> fetchPokemons();
+  Future<Pokemon> fetchPokemon(dynamic key);
 }
