@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokit/services/api/api_pokemon_implementation.dart';
 import 'package:pokit/ui/common/theme.dart';
 
 void main() {
@@ -28,6 +29,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  ImplPokemonApi api = ImplPokemonApi();
+
+  @override
+  void initState() {
+    api.fetchPokemon(10);
+    super.initState();
+  }
 
   void _incrementCounter() {
     setState(() {
