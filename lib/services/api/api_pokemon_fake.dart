@@ -4,7 +4,7 @@ import 'api_pokemon.dart';
 
 class FakePokemonApi implements PokemonApi {
   @override
-  Future<Pokemon> fetchPokemon(dynamic key) async {
+  Future<Pokemon> fetchPokemon(String key) async {
     return Pokemon(
       id: 12,
       name: 'butterfree',

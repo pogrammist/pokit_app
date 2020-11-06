@@ -12,24 +12,24 @@ class ImplPokemonApi implements PokemonApi {
   final Map<String, String> _headers = {'Accept': 'application/json'};
 
   Pokemon _pokemon;
-  Future<Pokemon> _pokemonFake = FakePokemonApi().fetchPokemon(1);
+  Future<Pokemon> _pokemonFake = FakePokemonApi().fetchPokemon('1');
 
   @override
-  Future<Pokemon> fetchPokemon(dynamic key) async {
-    if (int.parse(key.toString()) is int || key.toString() is String) {
-      if (_pokemon == null) {
-        print('getting pokemons from the web');
-        final uri = Uri.https(_host, _path + key.toString());
-        final results = await http.get(uri, headers: _headers);
-        final jsonObject = json.decode(results.body);
-        _pokemon = Pokemon.fromJson(jsonObject);
-        print(jsonObject);
-      } else {
-        print('getting pokemons from cache');
-      }
-      return _pokemon;
+  Future<Pokemon> fetchPokemon(String key) async {
+    if (_pokemon != null) {
+      print('getting pokemons from the web');
+      final uri = Uri.https(_host, _path + key.toString());
+      final results = await http.get(uri, headers: _headers);
+      final jsonObject = json.decode(results.body);
+      _pokemon = Pokemon.fromJson(jsonObject);
+      print(uri);
+      print(jsonObject);
     } else {
-      return _pokemonFake;
+      print('getting pokemons from cache');
     }
+    _pokemonFake.then((value) {
+      print(value.toJson());
+    });
+    return _pokemonFake;
   }
 }

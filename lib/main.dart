@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    api.fetchPokemon(10);
+    api.fetchPokemon('10');
     super.initState();
   }
 
