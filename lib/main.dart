@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pokit/services/api/api_pokemon_implementation.dart';
 import 'package:pokit/ui/common/theme.dart';
+import 'package:pokit/ui/pages/page_pokemons_list.dart';
+import 'package:pokit/ui/pages/page_pokemon_random.dart';
+import 'package:pokit/ui/pages/page_pokemon_search.dart';
+import 'package:pokit/ui/pages/page_undefined.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,66 +14,43 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: appTheme,
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  ImplPokemonApi api = ImplPokemonApi();
-
-  @override
-  void initState() {
-    api.fetchPokemon('10');
-    super.initState();
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      initialRoute: '/',
+      onUnknownRoute: (settings) => MaterialPageRoute(
+          builder: (context) => UndefinedPage(title: 'Undefined Page')),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(
+                builder: (context) => ListPokemonPage(title: 'List Pokemons'));
+            break;
+          case '/search':
+            return MaterialPageRoute(
+                builder: (context) =>
+                    SearchPokemonPage(title: 'Search Pokemon'));
+            break;
+          case '/random':
+            return MaterialPageRoute(
+                builder: (context) =>
+                    RandomPokemonPage(title: 'Random Pokemon'));
+            break;
+          default:
+            return MaterialPageRoute(
+                builder: (context) => UndefinedPage(title: 'Undefined Page'));
+        }
+        // Uri uri = Uri.parse(settings.name);
+        // if (uri.pathSegments.length == 2 &&
+        //     uri.pathSegments.first == 'pokemon') {
+        //   var id = uri.pathSegments[1];
+        //   return MaterialPageRoute(
+        //       builder: (context) => RandomPokemonPage(
+        //             id: id,
+        //             title: 'Random Pokemon',
+        //           ));
+        // }
+        // return MaterialPageRoute(
+        //     builder: (context) => UndefinedPage(title: 'Undefined Page'));
+      },
     );
   }
 }
