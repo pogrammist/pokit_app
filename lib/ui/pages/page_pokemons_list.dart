@@ -30,10 +30,28 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
         title: Text(widget.title),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: GestureDetector(
               onTap: () =>
                   _bloc.inputEventSink.add(PokemonEvent.pokemons_fetch),
+              child: Icon(
+                Icons.refresh,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () => _bloc.inputEventSink.add(PokemonEvent.pokemons_prev),
+              child: Icon(
+                Icons.north,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () => _bloc.inputEventSink.add(PokemonEvent.pokemons_next),
               child: Icon(
                 Icons.south,
               ),
@@ -55,23 +73,25 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
         builder: (BuildContext context, snapshot) => Container(
           child: ListView.builder(
             itemCount: snapshot.data?.results?.length ?? 0,
-            itemBuilder: (BuildContext context, int index) => Container(
-              color: index % 2 == 0 ? Colors.white : Colors.red[100],
-              child: ListTile(
-                leading: Text(
-                  'id:${snapshot.data.results[index].idOfUrl()}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                color: index % 2 == 0 ? Colors.white : Colors.red[100],
+                child: ListTile(
+                  leading: Text(
+                    'id:${snapshot.data.results[index].idOfUrl()}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  title: Text(
+                    'name: ${snapshot.data.results[index].name}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                title: Text(
-                  'name: ${snapshot.data.results[index].name}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),

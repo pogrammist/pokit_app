@@ -5,12 +5,12 @@ import 'package:pokit/logic/models/pokemons.dart';
 
 class PokemonsApi {
   final _host = 'pokeapi.co';
-  final _path = 'api/v2/pokemon/';
+  String _path = 'api/v2/pokemon/';
   final Map<String, String> _headers = {'Accept': 'application/json'};
 
-  Future<Pokemons> fetchPokemons() async {
+  Future<Pokemons> fetchPokemons({dynamic query}) async {
     print('getting pokemons from the web');
-    final uri = Uri.https(_host, _path);
+    final uri = Uri.https(_host, _path, query);
     final response = await http.get(uri, headers: _headers);
     if (response.statusCode == 200) {
       final jsonObject = json.decode(response.body);

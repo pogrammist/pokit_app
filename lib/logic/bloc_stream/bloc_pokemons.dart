@@ -15,12 +15,23 @@ class PokemonsBloc {
   Stream<Pokemons> get outputStateStream => _outputStateController.stream;
 
   void _mapEventToState(PokemonEvent event) async {
-    if (event == PokemonEvent.pokemons_fetch) {
-      _pokemons = await _repPokemonApi.getPokemons();
-    } else if (event == PokemonEvent.pokemons_remove) {
-      _pokemons = null;
-    } else {
-      throw Exception('Wrong Event Type');
+    switch (event) {
+      case PokemonEvent.pokemons_fetch:
+        _pokemons = await _repPokemonApi.getPokemons();
+        break;
+      case PokemonEvent.pokemons_next:
+        final nextUrl = _pokemons?.next;
+        if (nextUrl != null) setPokemons(nextUrl);
+        break;
+      case PokemonEvent.pokemons_prev:
+        final prevUrl = _pokemons?.previous;
+        if (prevUrl != null) setPokemons(prevUrl);
+        break;
+      case PokemonEvent.pokemons_remove:
+        _pokemons = null;
+        break;
+      default:
+        throw Exception('Wrong Event Type');
     }
     _outputStateController.sink.add(_pokemons);
   }
@@ -32,5 +43,10 @@ class PokemonsBloc {
   void dispose() {
     _inputEventController.close();
     _outputStateController.close();
+  }
+
+  void setPokemons(String url) async {
+    final query = Uri.parse(url).queryParameters;
+    _pokemons = await _repPokemonApi.getPokemons(query: query);
   }
 }

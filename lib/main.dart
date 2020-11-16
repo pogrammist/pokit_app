@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-                builder: (context) => ListPokemonPage(title: 'List Pokemons'));
+                builder: (context) => ListPokemonPage(title: 'Pokemons'));
             break;
           case '/search':
             return MaterialPageRoute(

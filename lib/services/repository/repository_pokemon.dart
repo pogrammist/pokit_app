@@ -19,8 +19,8 @@ class RepPokemonApi {
     return pokemon;
   }
 
-  Future<Pokemons> getPokemons() async {
-    var pokemonslist = await _pokemonsApi.fetchPokemons();
+  Future<Pokemons> getPokemons({dynamic query}) async {
+    var pokemonslist = await _pokemonsApi.fetchPokemons(query: query);
     return pokemonslist;
   }
 }
