@@ -59,7 +59,7 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
               color: index % 2 == 0 ? Colors.white : Colors.red[100],
               child: ListTile(
                 leading: Text(
-                  'id:$index',
+                  'id:${snapshot.data.results[index].idOfUrl()}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

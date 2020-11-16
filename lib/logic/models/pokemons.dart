@@ -47,4 +47,9 @@ class Results {
     data['url'] = this.url;
     return data;
   }
+
+  String idOfUrl() {
+    String id = Uri.parse(this.url).pathSegments.elementAt(3);
+    return id;
+  }
 }
