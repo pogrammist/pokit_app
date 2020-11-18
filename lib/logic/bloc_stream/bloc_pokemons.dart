@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:pokit/logic/bloc_stream/event_pokemon.dart';
+import 'package:pokit/logic/bloc_stream/event_pokemons.dart';
 import 'package:pokit/logic/models/pokemons.dart';
 import 'package:pokit/services/repository/repository_pokemon.dart';
 

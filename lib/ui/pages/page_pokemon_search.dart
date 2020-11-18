@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokit/logic/bloc_stream/bloc_pokemon.dart';
+import 'package:pokit/logic/bloc_stream/event_pokemon.dart';
 import 'package:pokit/ui/widgets/appbar_drawer.dart';
 import 'package:pokit/ui/widgets/card_pokemon.dart';
 import 'package:pokit/ui/widgets/pikachu.dart';
@@ -67,13 +68,14 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
 
   void getResponse() {
     if (_textFieldController.text.length != 0) {
-      _bloc.inputEventSink.add(_textFieldController.text);
+      final event = PokemonEventValue(data: _textFieldController.text);
+      _bloc.inputEventSink.add(event);
       _textFieldController.clear();
     }
   }
 
   void clearResponse() {
-    _bloc.inputEventSink.add('clear');
+    _bloc.inputEventSink.add(PokemonEventValue());
     _textFieldController.clear();
   }
 }
